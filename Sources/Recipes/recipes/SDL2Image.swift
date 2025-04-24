@@ -30,6 +30,8 @@ public final class SDL2Image: BaseRecipe, RecipeProtocol {
             src + "Xcode/build/Release-\(platform.sdk)/libSDL2_image.a"
         case .macosx:
             src + "Xcode/build/Release/libSDL2_image.a"
+        case .android, .android_simulator:
+            fatalError("android not implemented")
         }
     }
     

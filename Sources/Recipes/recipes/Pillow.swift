@@ -84,25 +84,28 @@ public final class Pillow: Recipe.CythonRecipe , RecipeProtocol {
         }
     }
     
-    public override func get_env(platform: AnyPlatform) -> [String : PlatformEnvironment.EnvironmentValue] {
+    public override func get_env(platform: AnyPlatform) -> [String : PlatformEnvironmentValue] {
         var env = super.get_env(platform: platform)
-        let sysroot_usr = platform.sysroot + "usr"
-        env["C_INCLUDE_PATH"] = .path(sysroot_usr + "include")
-        env["LIBRARY_PATH"] = .path(sysroot_usr + "lib")
-//        if var CFLAGS = env["CFLAGS"] {
-//            let include_plat = context.include_dir + platform.name
-//            CFLAGS += [
-//                " -I\(include_plat + "freetype")",
-//                "-I\(include_plat + "libjpeg")"
-//            ].whitespaced
-//            env["CFLAGS"] = CFLAGS
-//        }
-        //env["CC"] = .string(platform.cc_cmd)
-        env["ARCHFLAGS"] = "-arch \(platform.arch)"
-        if platform.sdk != .macosx {
-            env["PKG_CONFIG"] = "ios-pkg-config"
+        if let platform = platform as? ApplePlatform {
+            let sysroot_usr = platform.sysroot + "usr"
+            env["C_INCLUDE_PATH"] = .path(sysroot_usr + "include")
+            env["LIBRARY_PATH"] = .path(sysroot_usr + "lib")
+            //        if var CFLAGS = env["CFLAGS"] {
+            //            let include_plat = context.include_dir + platform.name
+            //            CFLAGS += [
+            //                " -I\(include_plat + "freetype")",
+            //                "-I\(include_plat + "libjpeg")"
+            //            ].whitespaced
+            //            env["CFLAGS"] = CFLAGS
+            //        }
+            //env["CC"] = .string(platform.cc_cmd)
+            env["ARCHFLAGS"] = "-arch \(platform.arch)"
+            if platform.sdk != .macosx {
+                env["PKG_CONFIG"] = "ios-pkg-config"
+            }
+            
+           
         }
-        
         return env
     }
     

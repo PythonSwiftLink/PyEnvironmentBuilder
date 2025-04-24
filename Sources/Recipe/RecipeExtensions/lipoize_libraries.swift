@@ -17,10 +17,10 @@ public extension RecipeProtocol {
             .chunked(on: \.sdk)
         
         for (sdk, platforms) in chucked_platforms {
-//            let excludes = exclude_sdks_in_xcframework()
-//            if excludes?.contains(sdk) ?? false {
-//                continue
-//            }
+            //            let excludes = exclude_sdks_in_xcframework()
+            //            if excludes?.contains(sdk) ?? false {
+            //                continue
+            //            }
             //let dest = context.dist_dir + "lib/\(sdk)/\(recipe.library.lastComponent)"
             let platform = platforms.first!
             let dist_file = get_dist_lib_file(platform: platform)
@@ -34,8 +34,9 @@ public extension RecipeProtocol {
                     output: dist_file,
                     libs: platforms.map { ($0.arch, get_library($0)) }
                 )
+            case .android, .android_simulator:
+                fatalError()
             }
         }
-        
     }
 }

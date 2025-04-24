@@ -30,8 +30,9 @@ public final class Freetype: BaseRecipe, RecipeProtocol {
     
     public func build_platform(_ platform: AnyPlatform) async throws {
         var env = get_env(platform: platform).normalized
-        
-        env["CC"] = platform.cc_cmd
+        if let platform = platform as? any ApplePlatform {
+            env["CC"] = platform.cc_cmd
+        }
         let workDir = src_folder(platform)
         
         try configure(triple: platform.triple, env: env, currentDirectory: workDir)

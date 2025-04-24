@@ -27,11 +27,13 @@ extension Recipe {
             [.macosx]
         }
         
-        open func get_env(platform: AnyPlatform) -> [String:PlatformEnvironment.EnvironmentValue] {
+        open func get_env(platform: AnyPlatform) -> [String:PlatformEnvironmentValue] {
             var env = platform.environment
             
             env["KIVYIOSROOT"] = .path("/Volumes/CodeSSD/kivy_ios_playground/venv/lib/python3.11/site-packages/kivy_ios")
-            env["IOSSDKROOT"] = .path(platform.sysroot)
+            if let platform = platform as? any ApplePlatform {
+                env["IOSSDKROOT"] = .path(platform.sysroot)
+            }
             env["CUSTOMIZED_OSX_COMPILER"] = "True"
             
             env["ARM_LD"] = env["LD"]

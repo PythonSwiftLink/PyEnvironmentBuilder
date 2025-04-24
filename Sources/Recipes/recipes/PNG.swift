@@ -46,20 +46,31 @@ public final class PNG: BaseRecipe, RecipeProtocol {
         
     }
     
-    fileprivate func configure(triple: String, env: [String : String]?, currentDirectory: Path) throws {
+    fileprivate func configure(triple: String, env: [String : String]?, currentDirectory: Path, sdk: Platforms.SDK = .iphoneos) throws {
             let proc = Process()
-            proc.executableURL = (currentDirectory + "configure").url
-            proc.currentDirectoryURL = currentDirectory.url
-            
-            let arguments = [
+        proc.executableURL = (currentDirectory + "configure").url
+        proc.currentDirectoryURL = currentDirectory.url
+        
+        let arguments = switch sdk {
+        case .android:
+            [
+                "--prefix=\(currentDirectory + "dist")",
+                "--host=\(triple)",
+                "--disable-static",
+                "--enable-shared"
+            ]
+        default:
+            [
                 "--prefix=\(currentDirectory + "dist")",
                 "--host=\(triple)",
                 "--disable-shared"
             ]
-            proc.arguments = arguments
-            proc.environment = env
-            try proc.run()
-            proc.waitUntilExit()
+        }
+        
+        proc.arguments = arguments
+        proc.environment = env
+        try proc.run()
+        proc.waitUntilExit()
             
         
     }

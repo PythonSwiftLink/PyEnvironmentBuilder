@@ -24,7 +24,7 @@ public final class Kivy: Recipe.CythonRecipe, RecipeProtocol {
         ["OpenGLES", "Accelerate", "CoreMedia", "CoreVideo"]
     }
     
-    public override func get_env(platform: AnyPlatform) -> [String : PlatformEnvironment.EnvironmentValue] {
+    public override func get_env(platform: AnyPlatform) -> [String : PlatformEnvironmentValue] {
         var env = super.get_env(platform: platform)
         let include_platform = context.include_dir + "\(platform.name)/"
         env["KIVY_SDL2_PATH"] = .string( [

@@ -13,7 +13,7 @@ public protocol RecipeClass: AnyObject {
     init(ctx: Context, platforms: [AnyPlatform])
     static func create(ctx: Context, platforms: [AnyPlatform]) -> Self
     
-    func get_env(platform: AnyPlatform) -> [String:PlatformEnvironment.EnvironmentValue]
+    func get_env(platform: AnyPlatform) -> [String:PlatformEnvironmentValue]
     
     func exclude_sdks_in_xcframework() -> [Platforms.SDK]?
     
@@ -56,11 +56,14 @@ public protocol RecipeProtocol: RecipeClass {
 // makes the following protocol functions optional
 
 public extension RecipeClass {
+    
+    
+    
     static func create(ctx: Context, platforms: [AnyPlatform]) -> Self {
        
         return .init(ctx: ctx, platforms: platforms)
     }
-    func _get_env(platform: AnyPlatform) -> [String:PlatformEnvironment.EnvironmentValue] {
+    func _get_env(platform: AnyPlatform) -> [String:PlatformEnvironmentValue] {
         platform.environment
     }
     
@@ -161,7 +164,7 @@ extension RecipeProtocol where Self: Recipe.CythonRecipe {
         process.waitUntilExit()
     }
     
-    public func cythonize(file: Path, env: [String:PlatformEnvironment.EnvironmentValue],  currentDirectory: Path?) throws {
+    public func cythonize(file: Path, env: [String:PlatformEnvironmentValue],  currentDirectory: Path?) throws {
         let proc = Process()
         proc.executablePath = .cythonize_py
         proc.arguments = [

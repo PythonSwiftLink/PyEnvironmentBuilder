@@ -40,6 +40,8 @@ public final class SDL2: BaseRecipe, RecipeProtocol {
             src + "Xcode/SDL/build/Release-\(platform.sdk)/libSDL2.a"
         case .macosx:
             src + "Xcode/SDL/build/Release/libSDL2.a"
+        case .android, .android_simulator:
+            fatalError()
         }
     }
     

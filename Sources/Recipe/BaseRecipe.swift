@@ -28,7 +28,7 @@ open class BaseRecipe {
 extension BaseRecipe: RecipeClass {
     
     
-    public func get_env(platform: AnyPlatform) -> [String : PlatformEnvironment.EnvironmentValue] {
+    public func get_env(platform: AnyPlatform) -> [String : PlatformEnvironmentValue] {
         platform.environment
     }
 }

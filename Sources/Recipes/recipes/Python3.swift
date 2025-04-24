@@ -26,7 +26,12 @@ public final class Python3: BaseRecipe, RecipeProtocol {
     public func include_per_platform() -> Bool { true }
     
     public func build_platform(_ platform: AnyPlatform) async throws {
-        
+        switch platform.sdk {
+        case .android:
+            fatalError()
+        default:
+            fatalError()
+        }
     }
     
     
